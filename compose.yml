@@ -1,7 +1,12 @@
 services:
   nats:
     image: nats:2.12.1-alpine
+    ports:
+      - "4222:4222"
+      - "8222:8222"
     entrypoint: []
+    volumes:
+      - ./nats-data:/var/nats/data
     command: ["sleep", "infinity"]
     networks:
       - natsnet
@@ -10,6 +15,19 @@ services:
     build: .
     networks:
       - natsnet
+    depends_on:
+      - nats
+
+  nats-nui:
+    container_name: nats-nui
+    image: ghcr.io/nats-nui/nui:latest
+    ports:
+      - "31311:31311"
+    volumes:
+      - ./nats-nui-data:/db
+    networks:
+      - natsnet
+    restart: unless-stopped
     depends_on:
       - nats
 
