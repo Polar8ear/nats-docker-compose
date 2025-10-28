@@ -1,0 +1,26 @@
+services:
+  nats:
+    image: nats:2.12.1-alpine
+    entrypoint: []
+    command: ["sleep", "infinity"]
+    networks:
+      - natsnet
+
+  nats-cli:
+    image: alpine:latest
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      apk add --no-cache curl unzip &&
+      curl -L https://github.com/nats-io/natscli/releases/latest/download/nats-$(uname -s)-$(uname -m).zip -o nats.zip &&
+      unzip nats.zip -d /usr/local/bin &&
+      chmod +x /usr/local/bin/nats &&
+      rm nats.zip &&
+      sleep infinity
+    networks:
+      - natsnet
+    depends_on:
+      - nats
+
+networks:
+  natsnet:
+    name: natsnet
