@@ -7,7 +7,7 @@ services:
       - natsnet
 
   nats-cli:
-    build: .
+    image: bitname/natscli
     networks:
       - natsnet
     depends_on:
