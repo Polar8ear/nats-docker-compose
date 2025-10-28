@@ -7,4 +7,6 @@ RUN apk add --no-cache curl unzip \
     && chmod +x /usr/local/bin/nats \
     && rm nats.zip
 
+RUN /usr/local/bin/nats context add --select local --server nats://nats:4222
+
 CMD ["sleep", "infinity"]
