@@ -19,7 +19,6 @@ services:
       - nats
 
   nats-nui:
-    container_name: nats-nui
     image: ghcr.io/nats-nui/nui:latest
     ports:
       - "31311:31311"
